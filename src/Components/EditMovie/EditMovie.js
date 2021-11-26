@@ -37,7 +37,18 @@ useEffect(onemoviedata, [])
 function UpdatedMovie ({movie}){
 
     console.log(movie)
+
     const history = useHistory();
+
+    const Edit = () =>{
+        
+        console.log(values)
+        fetch('https://61988db4164fa60017c230f5.mockapi.io/movies', {
+            method : "PUT",
+            body: JSON.stringify(values),
+            headers: {"Content-type": "application/json"}
+        }).then(()=> history.push ('/movies'))
+    }
 
  
 
@@ -60,15 +71,7 @@ function UpdatedMovie ({movie}){
     
     })  
 
-    const Edit = () =>{
-        
-        console.log(values)
-        fetch('https://61988db4164fa60017c230f5.mockapi.io/movies', {
-            method : "PUT",
-            body: JSON.stringify(values),
-            headers: {"Content-type": "application/json"}
-        }).then(()=> history.push ('/movies'))
-    }
+   
 
     return(
 
@@ -76,15 +79,15 @@ function UpdatedMovie ({movie}){
 
         <div className ="EditMovieForm ">
             
-            <input onBlur={handleBlur}  name="Mname" id="Mname" value={values.Mname} placeholder="Enter Movie name" onChange={handleChange}  />
+            <input onBlur={handleBlur}  name="Mname" id="Mname" value={movie.Mname} placeholder="Enter Movie name" onChange={handleChange}  />
             {errors.Mname && touched.Mname ? errors.Mname : ""}
-            <input onBlur={handleBlur}  name="poster" id="poster" value={values.poster} placeholder="Enter Movie poster" onChange={handleChange}/>
+            <input onBlur={handleBlur}  name="poster" id="poster" value={movie.poster} placeholder="Enter Movie poster" onChange={handleChange}/>
             {errors.poster && touched.poster ? errors.poster : ""}
-            <input onBlur={handleBlur} name="summary" id="summary" value={values.summary} placeholder="Enter Movie summary" onChange={handleChange}/>
+            <input onBlur={handleBlur} name="summary" id="summary" value={movie.summary} placeholder="Enter Movie summary" onChange={handleChange}/>
             {errors.summary && touched.summary ? errors.summary : ""}
-            <input onBlur={handleBlur} name="Ratings" id= "Ratings" value={ values.Ratings} placeholder="Enter Movie Ratings" onChange= {handleChange}/>
+            <input onBlur={handleBlur} name="Ratings" id= "Ratings" value={ movie.Ratings} placeholder="Enter Movie Ratings" onChange= {handleChange}/>
             {errors.Ratings && touched.Ratings ? errors.Ratings : ""}
-            <input onBlur= {handleBlur} name="trailer" id="trailer" value={ values.trailer} placeholder="Enter Movie trailer" onChange={handleChange} />
+            <input onBlur= {handleBlur} name="trailer" id="trailer" value={ movie.trailer} placeholder="Enter Movie trailer" onChange={handleChange} />
             {errors.trailer && touched.trailer ? errors.trailer :""}
             <button type="submit" > Update Changes</button>
         </div>
