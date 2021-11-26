@@ -53,15 +53,15 @@ function UpdatedMovie ({movie}){
  
 
     const formValidationSchema = yup.object ({
-        Mname:   yup.string().min(5).required(),
-        poster:  yup.string().min(4).required(),
-        summary: yup.string().min(20).required(),
-        Ratings: yup.number().min(0).max(10).required(),
-        trailer: yup.string().min(4).required()
+        Mname:   yup.string(),
+        poster:  yup.string(),
+        summary: yup.string(),
+        Ratings: yup.number(),
+        trailer: yup.string()
 
     })
 
-    const {touched,handleChange ,values, handleBlur, handleSubmit, errors} = useFormik ({
+    const {touched, handleChange ,values, handleBlur, handleSubmit, errors} = useFormik ({
 
         initialValues: {Mname:movie.Mname,poster:movie.poster,summary:movie.summary,Ratings:movie.Ratings,trailer:movie.trailer},
     
@@ -90,8 +90,14 @@ function UpdatedMovie ({movie}){
             <input onBlur= {handleBlur} name="trailer" id="trailer" value={ movie.trailer} placeholder="Enter Movie trailer" onChange={handleChange} />
             {errors.trailer && touched.trailer ? errors.trailer :""}
             <button type="submit" > Update Changes</button>
+            
         </div>
+
+        <div> <button onClick= {()=> history.goBack()} > ⬅ Back</button></div>
         </form>
+        
+
+        
     )
 }
 
