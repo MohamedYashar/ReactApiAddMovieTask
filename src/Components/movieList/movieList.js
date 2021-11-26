@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
+import React, { useEffect, useState} from 'react'
+import { useHistory } from 'react-router';
 import './movieList.css'
 import MovieContainer from '../movieContainer/movieContainer';
 
@@ -31,6 +31,9 @@ import MovieContainer from '../movieContainer/movieContainer';
         
     }
 
+    const history = useHistory ();
+    
+
     return(
 
         <div className="MovieList">
@@ -38,7 +41,7 @@ import MovieContainer from '../movieContainer/movieContainer';
                                               summary={Movie.summary} id ={Movie.id}
 
                                               deleteButton ={ <button onClick={()=>Remove(Movie.id) } > Delete</button>}
-                                              EditButton ={ <button> Edit</button>}
+                                              EditButton ={ <button onClick={ ()=> history.push(`./EditMovie/${(Movie.id)}`)} > Edit</button>}
                                               />))}
             
         </div>

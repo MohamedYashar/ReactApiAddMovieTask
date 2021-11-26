@@ -1,0 +1,25 @@
+.EditMovieForm{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin:10px ;
+    justify-content: center;
+    align-items: center;
+}
+
+
+input{
+
+    margin: 10px;
+    padding: 10px;
+    font-size: 20px;
+
+}
+
+.EditMovieForm button{
+    background-color: rgb(45, 45, 167);
+    color: white;
+    margin: 8px;
+    padding: 8px;
+    font-size: 25px;
+}

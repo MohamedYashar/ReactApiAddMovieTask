@@ -3,6 +3,7 @@ import './App.css';
 import MovieList from './Components/movieList/movieList';
 import Taskbar from './Components/Taskbar/Taskbar';
 import AddMovieForm from './Components/AddMovieForm/AddMovieForm';
+import EditMovie from './Components/EditMovie/EditMovie'
 
 
 
@@ -18,10 +19,8 @@ function App() {
          <h1>Welcome to the movie App!!!</h1>
        </Route>
        <Route path="/movies"> <MovieList/> </Route>
-       <Route path="/AddMovie-form" >
-         <AddMovieForm/>
-
-       </Route>
+       <Route path="/AddMovie-form" >   <AddMovieForm/>  </Route>
+       <Route path="/EditMovie/:id"> <EditMovie/> </Route>
      </Switch>
      
      

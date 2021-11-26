@@ -1,23 +1,46 @@
-import { useHistory } from 'react-router';
-import './AddMovieForm.css'
+
+import './EditMovie.css'
+
+import { useHistory, useParams } from 'react-router';
+import './EditMovie.css'
 import { useFormik } from 'formik'
 import * as yup from 'yup';
+import { useEffect, useState } from 'react';
 
 
 
 
 
-export default function AddMovieForm (){
-    const history = useHistory();
-    const AddMovie = () =>{
-        
-        console.log(values)
-        fetch('https://61988db4164fa60017c230f5.mockapi.io/movies', {
-            method : "POST",
-            body: JSON.stringify(values),
-            headers: {"Content-type": "application/json"}
-        }).then(()=> history.push ('/movies'))
+export default function EditMovie (){
+
+    const [movie, setmovie]=useState([])
+
+    const {id} = useParams();
+    const onemoviedata = () =>{
+     
+        fetch(`https://61988db4164fa60017c230f5.mockapi.io/movies/${id}`)
+        .then((response)=> response.json() )
+        .then((data)=> setmovie(data))
+
     }
+   
+    // console.log(movie)
+useEffect(onemoviedata, [])
+        
+
+    return (
+
+        <div>  { movie ? <UpdatedMovie movie={movie} /> : null}</div>
+    )
+}
+
+function UpdatedMovie ({movie}){
+
+    console.log(movie)
+    const history = useHistory();
+
+ 
+
     const formValidationSchema = yup.object ({
         Mname:   yup.string().min(5).required(),
         poster:  yup.string().min(4).required(),
@@ -25,24 +48,33 @@ export default function AddMovieForm (){
         Ratings: yup.number().min(0).max(10).required(),
         trailer: yup.string().min(4).required()
 
-
     })
 
     const {touched,handleChange ,values, handleBlur, handleSubmit, errors} = useFormik ({
 
-        initialValues: {Mname:"",poster:"",summary:"",Ratings:"",trailer:""},
+        initialValues: {Mname:movie.Mname,poster:movie.poster,summary:movie.summary,Ratings:movie.Ratings,trailer:movie.trailer},
     
         validationSchema : formValidationSchema,
 
-        onSubmit: AddMovie,
+        onSubmit: Edit,
     
-    })      
+    })  
 
-    return (
+    const Edit = () =>{
+        
+        console.log(values)
+        fetch('https://61988db4164fa60017c230f5.mockapi.io/movies', {
+            method : "PUT",
+            body: JSON.stringify(values),
+            headers: {"Content-type": "application/json"}
+        }).then(()=> history.push ('/movies'))
+    }
+
+    return(
 
         <form onSubmit={handleSubmit} >
 
-        <div className ="AddMovieForm">
+        <div className ="EditMovieForm ">
             
             <input onBlur={handleBlur}  name="Mname" id="Mname" value={values.Mname} placeholder="Enter Movie name" onChange={handleChange}  />
             {errors.Mname && touched.Mname ? errors.Mname : ""}
@@ -54,15 +86,25 @@ export default function AddMovieForm (){
             {errors.Ratings && touched.Ratings ? errors.Ratings : ""}
             <input onBlur= {handleBlur} name="trailer" id="trailer" value={ values.trailer} placeholder="Enter Movie trailer" onChange={handleChange} />
             {errors.trailer && touched.trailer ? errors.trailer :""}
-            <button type="submit" >Add Movie</button>
+            <button type="submit" > Update Changes</button>
         </div>
         </form>
     )
 }
 
-//Task FOR NEXT WEEK
+
+
+
+
+    //Task FOR NEXT WEEK
     // Validation - on Add movie & Edit movies
     // name - required// poster - min 4, required
     // rating - 0 - 10, required
     // summary - min 20 chars, required
     // trailer -min 4, required
+
+//     git remote -v
+// git add .
+// git commit -m "one update"
+// git branch -M main
+// git push origin main 
