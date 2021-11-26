@@ -1,0 +1,4 @@
+.Taskbar{
+    display: flex;
+    flex-direction: row;
+}

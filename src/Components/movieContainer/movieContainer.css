@@ -1,0 +1,24 @@
+.name-rating-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap; 
+  
+}
+
+.MovieContainer{
+    display: flex;
+    flex-direction: column;
+    width: 280px ;    
+    height: min-content;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 2px;
+    justify-content: center;
+
+}
+
+img{
+    width: 260px;
+    height: 350px;
+}

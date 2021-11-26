@@ -1,23 +1,30 @@
-import logo from './logo.svg';
+import { Switch,Route} from 'react-router';
 import './App.css';
+import MovieList from './Components/movieList/movieList';
+import Taskbar from './Components/Taskbar/Taskbar';
+import AddMovieForm from './Components/AddMovieForm/AddMovieForm';
+
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     
+     <Taskbar/>
+     
+     
+     <Switch>
+       <Route exact path="/" >
+         <h1>Welcome to the movie App!!!</h1>
+       </Route>
+       <Route path="/movies"> <MovieList/> </Route>
+       <Route path="/AddMovie-form" >
+         <AddMovieForm/>
+
+       </Route>
+     </Switch>
+     
+     
     </div>
   );
 }
