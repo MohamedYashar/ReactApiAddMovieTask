@@ -5,6 +5,14 @@
     flex-wrap: wrap; 
   
 }
+.Edit-delete-container{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 20px;
+    flex-wrap: wrap; 
+}
 
 .MovieContainer{
     display: flex;
