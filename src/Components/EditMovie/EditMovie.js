@@ -11,93 +11,93 @@ import { useEffect, useState } from 'react';
 
 
 
-export default function EditMovie (){
+export default function EditMovie() {
 
-    const [movie, setmovie]=useState(null)
+    const [movie, setmovie] = useState(null)
 
-    const {id} = useParams();
-    const onemoviedata = () =>{
-     
+    const { id } = useParams();
+    const onemoviedata = () => {
+
         fetch(`https://61988db4164fa60017c230f5.mockapi.io/movies/${id}`)
-        .then((response)=> response.json() )
-        .then((data)=> setmovie(data))
+            .then((response) => response.json())
+            .then((data) => setmovie(data))
 
     }
-   
+
     // console.log(movie)
-useEffect(onemoviedata, [])
-        
+    useEffect(onemoviedata, [])
+
 
     return (
 
-        <div>  { movie ? <UpdatedMovie movie={movie} /> : null}</div>
+        <div>  {movie ? <UpdatedMovie movie={movie} id={id} /> : null}</div>
     )
 }
 
-function UpdatedMovie ({movie}){
+function UpdatedMovie({ movie ,id}) {
 
     console.log(movie)
 
     const history = useHistory();
 
-    const Edit = (movie) =>{
-        
+    const Edit = (movie) => {
+//  ID TO BE PASSED FOR UPDATING CHANGES
         console.log(movie)
-        fetch('https://61988db4164fa60017c230f5.mockapi.io/movies', {
-            method : "PUT",
+        fetch(`https://61988db4164fa60017c230f5.mockapi.io/movies/${id}`, {
+            method: "PUT",
             body: JSON.stringify(movie),
-            headers: {"Content-type": "application/json"}
-        }).then(()=> history.push ('/movies'))
+            headers: { "Content-type": "application/json" }
+        }).then(() => history.push('/movies'))
     }
 
- 
 
-    const formValidationSchema = yup.object ({
-        Mname:   yup.string(),
-        poster:  yup.string(),
+
+    const formValidationSchema = yup.object({
+        Mname: yup.string(),
+        poster: yup.string(),
         summary: yup.string(),
         Ratings: yup.number(),
         trailer: yup.string()
 
     })
 
-    const {touched, handleChange ,values, handleBlur, handleSubmit, errors} = useFormik ({
+    const { touched, handleChange, values, handleBlur, handleSubmit, errors } = useFormik({
 
-        initialValues: {Mname:movie.Mname,poster:movie.poster,summary:movie.summary,Ratings:movie.Ratings,trailer:movie.trailer},
-    
-        validationSchema : formValidationSchema,
+        initialValues: { Mname: movie.Mname, poster: movie.poster, summary: movie.summary, Ratings: movie.Ratings, trailer: movie.trailer },
 
-        onSubmit: (values) => {Edit (values)}
-    
-    })  
+        validationSchema: formValidationSchema,
 
-   
+        onSubmit: (values) => { Edit(values) }
 
-    return(
+    })
+
+
+
+    return (
 
         <form onSubmit={handleSubmit} >
 
-        <div className ="EditMovieForm ">
-            
-            <input onBlur={handleBlur}  name="Mname" id="Mname" value={movie.Mname} placeholder="Enter Movie name" onChange={handleChange}  />
-            {errors.Mname && touched.Mname ? errors.Mname : ""}
-            <input onBlur={handleBlur}  name="poster" id="poster" value={movie.poster} placeholder="Enter Movie poster" onChange={handleChange}/>
-            {errors.poster && touched.poster ? errors.poster : ""}
-            <input onBlur={handleBlur}  name="summary" id="summary" value={movie.summary} placeholder="Enter Movie summary" onChange={handleChange}/>
-            {errors.summary && touched.summary ? errors.summary : ""}
-            <input onBlur={handleBlur}  name="Ratings" id= "Ratings" value={ movie.Ratings} placeholder="Enter Movie Ratings" onChange= {handleChange}/>
-            {errors.Ratings && touched.Ratings ? errors.Ratings : ""}
-            <input onBlur= {handleBlur} name="trailer" id="trailer" value={ movie.trailer} placeholder="Enter Movie trailer" onChange={handleChange} />
-            {errors.trailer && touched.trailer ? errors.trailer :""}
-            <button type="submit" > Update Changes</button>
-            
-        </div>
+            <div className="EditMovieForm ">
 
-        <div> <button onClick= {()=> history.goBack()} > ⬅ Back</button></div>
+                <input onBlur={handleBlur} name="Mname" id="Mname" value={values.Mname} placeholder="Enter Movie name" onChange={handleChange} />
+                {errors.Mname && touched.Mname ? errors.Mname : ""}
+                <input onBlur={handleBlur} name="poster" id="poster" value={values.poster} placeholder="Enter Movie poster" onChange={handleChange} />
+                {errors.poster && touched.poster ? errors.poster : ""}
+                <input onBlur={handleBlur} name="summary" id="summary" value={values.summary} placeholder="Enter Movie summary" onChange={handleChange} />
+                {errors.summary && touched.summary ? errors.summary : ""}
+                <input onBlur={handleBlur} name="Ratings" id="Ratings" value={values.Ratings} placeholder="Enter Movie Ratings" onChange={handleChange} />
+                {errors.Ratings && touched.Ratings ? errors.Ratings : ""}
+                <input onBlur={handleBlur} name="trailer" id="trailer" value={values.trailer} placeholder="Enter Movie trailer" onChange={handleChange} />
+                {errors.trailer && touched.trailer ? errors.trailer : ""}
+                <button type="submit" > Update Changes</button>
+
+            </div>
+
+            <div> <button onClick={() => history.goBack()} > ⬅ Back</button></div>
         </form>
-        
 
-        
+
+
     )
 }
 
