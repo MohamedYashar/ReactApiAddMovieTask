@@ -4,38 +4,35 @@ import { useFormik } from 'formik'
 import * as yup from 'yup';
 
 
-
-
-
 export default function AddMovieForm (){
     const history = useHistory();
-    const AddMovie = () =>{
-        
-        console.log(values)
-        fetch('https://61988db4164fa60017c230f5.mockapi.io/movies', {
-            method : "POST",
-            body: JSON.stringify(values),
-            headers: {"Content-type": "application/json"}
-        }).then(()=> history.push ('/movies'))
-    }
+   
     const formValidationSchema = yup.object ({
         Mname:   yup.string().min(5).required(),
         poster:  yup.string().min(4).required(),
         summary: yup.string().min(20).required(),
         Ratings: yup.number().min(0).max(10).required(),
         trailer: yup.string().min(4).required()
-
-
     })
+
+    const AddMovie = (values) =>{
+        
+        
+        fetch('https://61988db4164fa60017c230f5.mockapi.io/movies', {
+            method : "POST",
+            body: JSON.stringify(values),
+            headers: {"Content-type": "application/json"}
+        }).then(()=> history.push ('/movies'))
+    }
 
     const {touched,handleChange ,values, handleBlur, handleSubmit, errors} = useFormik ({
 
-        initialValues: {Mname:"",poster:"",summary:"",Ratings:"",trailer:""},
-    
-        validationSchema : formValidationSchema,
+            initialValues: {Mname:"",poster:"",summary:"",Ratings:"",trailer:""},
+        
+            validationSchema : formValidationSchema,
 
-        onSubmit: AddMovie,
-    
+            onSubmit: (values) =>{AddMovie (values)} 
+        
     })      
 
     return (
