@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 
 export default function EditMovie (){
 
-    const [movie, setmovie]=useState([])
+    const [movie, setmovie]=useState(null)
 
     const {id} = useParams();
     const onemoviedata = () =>{
@@ -40,12 +40,12 @@ function UpdatedMovie ({movie}){
 
     const history = useHistory();
 
-    const Edit = () =>{
+    const Edit = (movie) =>{
         
-        console.log(values)
+        console.log(movie)
         fetch('https://61988db4164fa60017c230f5.mockapi.io/movies', {
             method : "PUT",
-            body: JSON.stringify(values),
+            body: JSON.stringify(movie),
             headers: {"Content-type": "application/json"}
         }).then(()=> history.push ('/movies'))
     }
@@ -67,7 +67,7 @@ function UpdatedMovie ({movie}){
     
         validationSchema : formValidationSchema,
 
-        onSubmit: Edit,
+        onSubmit: (values) => {Edit (values)}
     
     })  
 
@@ -83,9 +83,9 @@ function UpdatedMovie ({movie}){
             {errors.Mname && touched.Mname ? errors.Mname : ""}
             <input onBlur={handleBlur}  name="poster" id="poster" value={movie.poster} placeholder="Enter Movie poster" onChange={handleChange}/>
             {errors.poster && touched.poster ? errors.poster : ""}
-            <input onBlur={handleBlur} name="summary" id="summary" value={movie.summary} placeholder="Enter Movie summary" onChange={handleChange}/>
+            <input onBlur={handleBlur}  name="summary" id="summary" value={movie.summary} placeholder="Enter Movie summary" onChange={handleChange}/>
             {errors.summary && touched.summary ? errors.summary : ""}
-            <input onBlur={handleBlur} name="Ratings" id= "Ratings" value={ movie.Ratings} placeholder="Enter Movie Ratings" onChange= {handleChange}/>
+            <input onBlur={handleBlur}  name="Ratings" id= "Ratings" value={ movie.Ratings} placeholder="Enter Movie Ratings" onChange= {handleChange}/>
             {errors.Ratings && touched.Ratings ? errors.Ratings : ""}
             <input onBlur= {handleBlur} name="trailer" id="trailer" value={ movie.trailer} placeholder="Enter Movie trailer" onChange={handleChange} />
             {errors.trailer && touched.trailer ? errors.trailer :""}
@@ -102,9 +102,6 @@ function UpdatedMovie ({movie}){
 }
 
 
-
-
-
     //Task FOR NEXT WEEK
     // Validation - on Add movie & Edit movies
     // name - required// poster - min 4, required
@@ -112,8 +109,3 @@ function UpdatedMovie ({movie}){
     // summary - min 20 chars, required
     // trailer -min 4, required
 
-//     git remote -v
-// git add .
-// git commit -m "one update"
-// git branch -M main
-// git push origin main 
